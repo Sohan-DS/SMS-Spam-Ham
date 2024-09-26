@@ -5,7 +5,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 
 # Load the saved model
-model = tf.keras.models.load_model("C:/Users/Sohan/OneDrive/Desktop/DUK/Deep Learning/deep-learning/RNN/results/model/spam_mod.h5")
+model = tf.keras.models.load_model("https://github.com/Sohan-DS/SMS-Spam-Ham/blob/main/spam_mod.h5")
 
 # Tokenizer settings (Ensure this matches your training tokenizer)
 tokenizer = Tokenizer()
