@@ -3,12 +3,30 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
+import requests
+
+# Download the model file from GitHub
+@st.cache_data
+def download_model():
+    url = "https://github.com/Sohan-DS/SMS-Spam-Ham/raw/main/spam_mod.h5"
+    response = requests.get(url)
+    with open("spam_mod.h5", "wb") as f:
+        f.write(response.content)
+
+# Call the function to download the model
+download_model()
 
 # Load the saved model
-model = tf.keras.models.load_model("https://github.com/Sohan-DS/SMS-Spam-Ham/blob/main/spam_mod.h5")
+model = tf.keras.models.load_model("spam_mod.h5")
 
-# Tokenizer settings (Ensure this matches your training tokenizer)
-tokenizer = Tokenizer()
+# Define a function to initialize the tokenizer
+@st.cache_data
+def initialize_tokenizer():
+    tokenizer = Tokenizer()
+    return tokenizer
+
+# Initialize the tokenizer
+tokenizer = initialize_tokenizer()
 
 # Function to preprocess input text
 def preprocess_text(input_text, tokenizer, max_length=10):
@@ -16,7 +34,7 @@ def preprocess_text(input_text, tokenizer, max_length=10):
     padded_sequence = pad_sequences(sequences, maxlen=max_length, padding='post')
     return padded_sequence
 
-# Streamlit app
+# Streamlit app UI
 st.title("SMS Spam Classifier")
 
 st.write("""
